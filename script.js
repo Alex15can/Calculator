@@ -1,6 +1,7 @@
 currentValue = "";
 lastValue = "";
 currentOperation = "";
+futureOperation = "";
 
 function calculation(value) {
     if (currentOperation != "=") {
@@ -11,41 +12,66 @@ function calculation(value) {
 
 function display(value) {
     if (value == "") {
-        currentValue = ""
-        lastValue = ""
-        currentOperation = ""
+        currentValue = "";
+        lastValue = "";
+        currentOperation = "";
+        futureOperation = "";
     };
     document.getElementById("display").textContent=value;
 };
-function operation(sign) {
-    if (lastValue != '' && sign == "=" && currentOperation == "+") {
+function operation(futureoperation) {
+    if (lastValue != '' && futureoperation == "=" && currentOperation == "+") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) + Number(currentValue);
-        currentOperation = sign;
+        currentOperation = futureoperation;
         display(currentValue);
-    }else if(lastValue != '' && sign != "=" && currentOperation == "+") {
+    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "+") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) + Number(currentValue);
-        currentOperation = sign;
+        currentOperation = futureoperation;
         lastValue = currentValue;
         currentValue = ""
         display(lastValue);
-    }else if(lastValue != '' && sign == "=" && currentOperation == "-") {
+    }else if(lastValue != '' && futureoperation == "=" && currentOperation == "-") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) - Number(currentValue);
-        currentOperation = sign;
+        currentOperation = futureoperation;
         display(currentValue);
-    }else if(lastValue != '' && sign != "=" && currentOperation == "-") {
+    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "-") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) - Number(currentValue);
         lastValue = currentValue;
         currentValue = ""
-        currentOperation = sign;
+        currentOperation = futureoperation;
+        display(lastValue);
+    }else if(lastValue != '' && futureoperation == "=" && currentOperation == "*") {
+        console.log(lastValue, currentValue, currentOperation)
+        currentValue = Number(lastValue) * Number(currentValue);
+        currentOperation = futureoperation;
+        display(currentValue);
+    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "*") {
+        console.log(lastValue, currentValue, currentOperation)
+        currentValue = Number(lastValue) * Number(currentValue);
+        lastValue = currentValue;
+        currentValue = ""
+        currentOperation = futureoperation;
+        display(lastValue);
+    }else if(lastValue != '' && futureoperation == "=" && currentOperation == "/") {
+        console.log(lastValue, currentValue, currentOperation)
+        currentValue = Number(lastValue) / Number(currentValue);
+        currentOperation = futureoperation;
+        display(currentValue);
+    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "/") {
+        console.log(lastValue, currentValue, currentOperation)
+        currentValue = Number(lastValue) / Number(currentValue);
+        lastValue = currentValue;
+        currentValue = ""
+        currentOperation = futureoperation;
         display(lastValue);
     }else {
         lastValue = currentValue;
         currentValue = "";
-        currentOperation = sign;
+        currentOperation = futureoperation;
     };
 };
 
@@ -87,6 +113,12 @@ addition.addEventListener("click", function (){
 });
 subtraction.addEventListener("click", function (){
     operation("-");
+});
+multiplication.addEventListener("click", function (){
+    operation("*");
+});
+division.addEventListener("click", function (){
+    operation("/");
 });
 equal.addEventListener("click", function (){
     operation("=");
