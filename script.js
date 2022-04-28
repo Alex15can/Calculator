@@ -4,79 +4,95 @@ currentOperation = "";
 futureOperation = "";
 
 function calculation(value) {
+    if (value == '') {
+        currentValue = "";
+        lastValue = "";
+        currentOperation = "";
+        futureOperation = "";
+    };
     if (currentOperation != "=") {
-        currentValue += value
+        if (currentValue.includes(".") == false && value != ".") {
+            currentValue += value
+        };
     };
     display(currentValue)
 };
 
 function display(value) {
     if (value == "") {
-        currentValue = "";
-        lastValue = "";
-        currentOperation = "";
-        futureOperation = "";
+        value = 0
     };
+    value = Math.round(value * 1000000) / 1000000;
     document.getElementById("display").textContent=value;
 };
-function operation(futureoperation) {
-    if (lastValue != '' && futureoperation == "=" && currentOperation == "+") {
+function operation(futureOperation) {
+    if (lastValue != '' && futureOperation == "=" && currentOperation == "+") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) + Number(currentValue);
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         display(currentValue);
-    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "+") {
+    }else if(lastValue != '' && futureOperation != "=" && currentOperation == "+") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) + Number(currentValue);
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         lastValue = currentValue;
         currentValue = ""
         display(lastValue);
-    }else if(lastValue != '' && futureoperation == "=" && currentOperation == "-") {
+    }else if(lastValue != '' && futureOperation == "=" && currentOperation == "-") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) - Number(currentValue);
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         display(currentValue);
-    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "-") {
+    }else if(lastValue != '' && futureOperation != "=" && currentOperation == "-") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) - Number(currentValue);
         lastValue = currentValue;
         currentValue = ""
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         display(lastValue);
-    }else if(lastValue != '' && futureoperation == "=" && currentOperation == "*") {
+    }else if(lastValue != '' && futureOperation == "=" && currentOperation == "*") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) * Number(currentValue);
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         display(currentValue);
-    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "*") {
+    }else if(lastValue != '' && futureOperation != "=" && currentOperation == "*") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) * Number(currentValue);
         lastValue = currentValue;
         currentValue = ""
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         display(lastValue);
-    }else if(lastValue != '' && futureoperation == "=" && currentOperation == "/") {
+    }else if(lastValue != '' && futureOperation == "=" && currentOperation == "/") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) / Number(currentValue);
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         display(currentValue);
-    }else if(lastValue != '' && futureoperation != "=" && currentOperation == "/") {
+    }else if(lastValue != '' && futureOperation != "=" && currentOperation == "/") {
         console.log(lastValue, currentValue, currentOperation)
         currentValue = Number(lastValue) / Number(currentValue);
         lastValue = currentValue;
         currentValue = ""
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
         display(lastValue);
+    }else if (lastValue != '' && futureOperation == "=" && currentOperation == "=") {
+        futureOperation = ''
+    }else if (futureOperation == "%") {
+        console.log(currentValue);
+        currentValue = currentValue / 100;
+        display(currentValue);
+    }else if (futureOperation == "+/-" && currentValue != 0) {
+        console.log(currentValue);
+        currentValue = currentValue * -1;
+        display(currentValue);
     }else {
         lastValue = currentValue;
         currentValue = "";
-        currentOperation = futureoperation;
+        currentOperation = futureOperation;
     };
 };
 
 clear.addEventListener("click", function (){
-    display("");
+    calculation('');
 });
 one.addEventListener("click", function (){
     calculation('1');
@@ -122,4 +138,13 @@ division.addEventListener("click", function (){
 });
 equal.addEventListener("click", function (){
     operation("=");
+});
+decimal.addEventListener("click", function (){
+    calculation(".");
+});
+percent.addEventListener("click", function (){
+    operation("%");
+});
+sign.addEventListener("click", function (){
+    operation("+/-");
 });
